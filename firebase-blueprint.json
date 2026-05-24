@@ -1,0 +1,77 @@
+{
+  "entities": {
+    "Registration": {
+      "title": "Student Registration",
+      "description": "Represents a student's application for enrollment.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "tracking_id": { "type": "string" },
+        "full_name": { "type": "string" },
+        "age": { "type": "number" },
+        "sex": { "type": "string", "enum": ["Male", "Female"] },
+        "promoted_grade": { "type": "number", "enum": [10, 11, 12] },
+        "average": { "type": "number" },
+        "transcript_url": { "type": "string" },
+        "receipt_url": { "type": "string" },
+        "payment_method": { "type": "string", "enum": ["CBE", "Sinqee Bank", "Telebirr"] },
+        "status": { "type": "string", "enum": ["Pending Review", "Approved", "Rejected"] },
+        "class_assignment": { "type": "string" },
+        "rejection_reason": { "type": "string" },
+        "created_at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["full_name", "age", "sex", "promoted_grade", "average", "transcript_url", "receipt_url", "payment_method", "status", "created_at", "tracking_id"]
+    },
+    "GradeSetting": {
+      "title": "Grade Configuration",
+      "description": "Settings for each grade level.",
+      "type": "object",
+      "properties": {
+        "grade": { "type": "number" },
+        "students_per_class": { "type": "number" }
+      },
+      "required": ["grade", "students_per_class"]
+    },
+    "Class": {
+      "title": "Classroom",
+      "description": "A generated class group.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "grade": { "type": "number" },
+        "class_name": { "type": "string" },
+        "class_type": { "type": "string" },
+        "total_students": { "type": "number" }
+      },
+      "required": ["grade", "class_name", "class_type", "total_students"]
+    },
+    "AdminLog": {
+      "title": "Admin Activity Log",
+      "description": "Logs of sensitive admin actions.",
+      "type": "object",
+      "properties": {
+        "action": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "ip_address": { "type": "string" }
+      }
+    }
+  },
+  "firestore": {
+    "registrations/{registrationId}": {
+      "schema": "Registration",
+      "description": "Main collection for student registrations."
+    },
+    "grade_settings/{gradeId}": {
+      "schema": "GradeSetting",
+      "description": "Per-grade class size settings."
+    },
+    "classes/{classId}": {
+      "schema": "Class",
+      "description": "Collection of final generated classes."
+    },
+    "admin_logs/{logId}": {
+      "schema": "AdminLog",
+      "description": "Security logs for admin actions."
+    }
+  }
+}
